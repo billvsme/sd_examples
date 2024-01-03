@@ -111,7 +111,10 @@ display(images[0])
 ```
 
 ## ControlNet-Canny
-使用ControlNet-Canny精确控制图像生成
+使用图像细节精准图像生成  
+  
+<a href="https://sm.ms/image/vemCQha54ETGOJF" target="_blank"><img src="https://s2.loli.net/2024/01/03/vemCQha54ETGOJF.png" width="70%"></a>
+
 ```python
 from io import BytesIO
 
@@ -170,7 +173,10 @@ display(image_grid([init_image, canny_image, images[0]], 1, 3))
 ```
 
 ## ControlNet-Openpose
-使用人物骨骼控制图像生成
+使用人物骨骼控制图像生成  
+
+<a href="https://sm.ms/image/qahoHUtw58yBPld" target="_blank"><img src="https://s2.loli.net/2024/01/03/qahoHUtw58yBPld.png" width="70%"></a>
+
 ```python
 """ControlNet-Openpose
 """
