@@ -1,5 +1,9 @@
 Stable Diffusion examples
 =========
+## Colab
+可以直接在Colab尝试后面所有示例  
+
+[![Open Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/billvsme/stable_diffusion_examples/blob/master/jupyter/sd_examples.ipynb)  
 
 ## 依赖以及模型
 ```shell
@@ -80,7 +84,7 @@ display(image_grid([init_image, images[0]], 1, 2))
 ```
 
 ## LCM
-使用LCM lora加快生成，从20步缩短到4步
+使用LCM lora加快生成，从20步缩短到**4步**
 ```python
 import torch
 from IPython.display import display
