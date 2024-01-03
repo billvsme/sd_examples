@@ -3,7 +3,7 @@ Stable Diffusion examples
 
 ## 依赖以及模型
 ```shell
-pip install diffusers controlnet_aux
+pip install accelerate diffusers controlnet_aux omegaconf
 ```
 ```shell
 mkdir -p /content/models
@@ -20,8 +20,6 @@ import torch
 from IPython.display import display
 from diffusers import StableDiffusionPipeline, UniPCMultistepScheduler
 
-
-pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 
 model_id = "/content/models/stable-diffusion-v1-5"
 pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
