@@ -14,7 +14,7 @@ git clone --depth=1 https://huggingface.co/latent-consistency/lcm-lora-sdv1-5 /c
 # ControlNet 模型
 git clone --depth=1 https://huggingface.co/lllyasviel/ControlNet-v1-1 /content/models/ControlNet-v1-1
 ```
-## 文生图
+## Text to Image
 ```python
 import torch
 from IPython.display import display
@@ -38,7 +38,7 @@ for image in images:
     display(image)
 ```
 
-## 图生图
+## Image to Image
 ```python
 from io import BytesIO
 
