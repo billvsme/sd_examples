@@ -180,8 +180,6 @@ display(image_grid([init_image, canny_image, images[0]], 1, 3))
 <a href="https://sm.ms/image/qahoHUtw58yBPld" target="_blank"><img src="https://s2.loli.net/2024/01/03/qahoHUtw58yBPld.png" width="70%"></a>
 
 ```python
-"""ControlNet-Openpose
-"""
 from io import BytesIO
 
 import cv2
@@ -231,4 +229,53 @@ def image_grid(imgs, rows, cols):
     return grid
 
 display(image_grid([init_image, openpose_image, images[0]], 1, 3))
+```
+
+## AnimateDiff
+生成动画
+```python
+import torch
+from diffusers import AnimateDiffPipeline, DDIMScheduler, MotionAdapter
+from diffusers.utils import export_to_gif
+
+model_id = "/content/models/stable-diffusion-v1-5"
+adapter_id = "/content/models/animatediff-motion-adapter-v1-5-2"
+adapter = MotionAdapter.from_pretrained(adapter_id, torch_dtype=torch.float16)
+pipe = AnimateDiffPipeline.from_pretrained(model_id, motion_adapter=adapter, torch_dtype=torch.float16)
+
+pipe.load_lora_weights(
+    "/content/models/animatediff-motion-lora-zoom-out", adapter_name="zoom-out",
+)
+pipe.load_lora_weights(
+    "/content/models/animatediff-motion-lora-pan-left", adapter_name="pan-left",
+)
+pipe.set_adapters(["zoom-out", "pan-left"], adapter_weights=[1.0, 1.0])
+
+
+pipe.scheduler = DDIMScheduler.from_pretrained(
+    model_id,
+    subfolder="scheduler",
+    clip_sample=False,
+    timestep_spacing="linspace",
+    beta_schedule="linear",
+    steps_offset=1,
+)
+
+# pipe.enable_vae_slicing()
+# pipe.enable_model_cpu_offload(device="cuda")
+pipe.to("cuda")
+
+prompt = ["(taylor swift), best quality, extremely detailed"]
+negative_prompt=["monochrome, lowres, bad anatomy, worst quality, low quality"]
+
+frames = pipe(
+    prompt=prompt,
+    negative_prompt=negative_prompt,
+    num_frames=16,
+    guidance_scale=7.5,
+    num_inference_steps=25,
+    generator=torch.Generator("cuda").manual_seed(42)
+).frames[0]
+
+export_to_gif(frames, "animation.gif")
 ```
